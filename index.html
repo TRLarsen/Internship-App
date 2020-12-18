@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+<style>
+body {
+  background-color: black;
+  color: white;
+}
+h2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.button {
+  background-color: green;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+.buttonDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#myForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+#myForm > input[type=textarea] {
+  width: 100px;
+}
+</style>
+
+<h2>Intern Time Clock</h2>
+
+<!-- Button look change -->
+<script>
+  var intern = "out"
+  function clickFunction() {
+      if (intern == "out") {
+          document.querySelector("button").style.backgroundColor = "red";
+          document.querySelector("button").innerText = "Out"
+          intern = "in"
+          obj_in.data.in_or_out = "Out"
+          console.log("Clocked In:")}
+      else if (intern == "in") {
+          document.querySelector("button").style.backgroundColor = "green";
+          document.querySelector("button").innerText = "In"
+          intern = "out"
+          obj_in.data.in_or_out = "In"
+          console.log("Clocked Out:")
+      }
+      console.log(Date())
+  }
+</script>
+
+<!-- Submit to Google Sheet through apispreadsheets -->
+<script
+  src="https://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous"></script>
+<script>
+var obj_in = {"data": {"in_or_out":"In" }}
+function SubForm (){
+    $.ajax({
+        url:'https://api.apispreadsheets.com/data/5119/', //change this to the url provided by apispreadsheets
+        type:'post',
+        data:$("#myForm").serializeArray(),
+        success: function(){
+          console.log("Form Data Submitted :)")
+        },
+        error: function(){
+          console.log("There was an error :(")
+        },
+    });
+    $.ajax({
+        url:'https://api.apispreadsheets.com/data/5119/',
+        type:'post',
+        data: JSON.stringify(obj_in), //https://www.apispreadsheets.com/guides/update-data-subset-rows
+    });
+}
+</script>
+
+<form id="myForm">
+  <label>Full Name</label>
+  <br/>
+  <input name="full_name" />
+  <br/>
+  <label>Student Email</label>
+  <br/>
+  <input name="email" />
+  <br/>
+  <label>What did you do today?</label>
+  <br/>
+  <textarea name="message">
+  </textarea>
+  <br/>
+  <br/>
+</form>
+
+<div class="buttonDiv">
+  <button class="button" onclick="SubForm(); clickFunction()">In</button>
+</div>
+
+</body>
+</html>
