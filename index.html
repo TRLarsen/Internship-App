@@ -6,7 +6,6 @@
     <title>Document</title>
 </head>
 <body>
-
 <style>
 body {
   background-color: black;
@@ -49,6 +48,7 @@ h2 {
 
 <!-- Button look change -->
 <script>
+  var obj_in = {"data": {"in_or_out":"In", "date_and_time":Date(), "full_name":"null", "email":"null", "message":"null"}}
   var intern = "out"
   function clickFunction() {
       if (intern == "out") {
@@ -74,23 +74,22 @@ h2 {
   integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
   crossorigin="anonymous"></script>
 <script>
-var obj_in = {"data": {"in_or_out":"In" }}
+var inputs = document.getElementById("myForm", "full_name")
 function SubForm (){
-    $.ajax({
-        url:'https://api.apispreadsheets.com/data/5119/', //change this to the url provided by apispreadsheets
-        type:'post',
-        data:$("#myForm").serializeArray(),
-        success: function(){
-          console.log("Form Data Submitted :)")
-        },
-        error: function(){
-          console.log("There was an error :(")
-        },
-    });
+  obj_in.data.full_name = myForm.full_name.value;
+  obj_in.data.email = myForm.email.value;
+  obj_in.data.message = myForm.message.value;
+  obj_in.data.date_and_time = Date()
     $.ajax({
         url:'https://api.apispreadsheets.com/data/5119/',
         type:'post',
         data: JSON.stringify(obj_in), //https://www.apispreadsheets.com/guides/update-data-subset-rows
+     success: function(){
+        console.log("Form Data Submitted :)")
+     },
+     error: function(){
+       console.log("There was an error :(")
+     },
     });
 }
 </script>
@@ -106,8 +105,7 @@ function SubForm (){
   <br/>
   <label>What did you do today?</label>
   <br/>
-  <textarea name="message">
-  </textarea>
+  <textarea name="message"></textarea>
   <br/>
   <br/>
 </form>
