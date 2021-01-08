@@ -4,95 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+
 </head>
-<body>
-<style>
-body {
-  background-color: black;
-  color: white;
-}
-h2 {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.button {
-  background-color: green;
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
-}
-.buttonDiv {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-#myForm {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-#myForm > input[type=textarea] {
-  width: 100px;
-}
-</style>
+<body>    
 
-<h2>Intern Time Clock</h2>
-
-<!-- Button look change -->
-<script>
-  var obj_in = {"data": {"in_or_out":"In", "date_and_time":Date(), "full_name":"null", "email":"null", "message":"null"}}
-  var intern = "out"
-  function clickFunction() {
-      if (intern == "out") {
-          document.querySelector("button").style.backgroundColor = "red";
-          document.querySelector("button").innerText = "Out"
-          intern = "in"
-          obj_in.data.in_or_out = "Out"
-          console.log("Clocked In:")}
-      else if (intern == "in") {
-          document.querySelector("button").style.backgroundColor = "green";
-          document.querySelector("button").innerText = "In"
-          intern = "out"
-          obj_in.data.in_or_out = "In"
-          console.log("Clocked Out:")
-      }
-      console.log(Date())
-  }
-</script>
-
-<!-- Submit to Google Sheet through apispreadsheets -->
 <script
   src="https://code.jquery.com/jquery-3.4.1.js"
   integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-  crossorigin="anonymous"></script>
-<script>
-var inputs = document.getElementById("myForm", "full_name")
-function SubForm (){
-  obj_in.data.full_name = myForm.full_name.value;
-  obj_in.data.email = myForm.email.value;
-  obj_in.data.message = myForm.message.value;
-  obj_in.data.date_and_time = Date()
-    $.ajax({
-        url:'https://api.apispreadsheets.com/data/5119/',
-        type:'post',
-        data: JSON.stringify(obj_in), //https://www.apispreadsheets.com/guides/update-data-subset-rows
-     success: function(){
-        console.log("Form Data Submitted :)")
-     },
-     error: function(){
-       console.log("There was an error :(")
-     },
-    });
-}
+  crossorigin="anonymous">
 </script>
+
+<script src="tyler.js"></script>
+<link rel="stylesheet" href="tyler.css">
+
+<h2>Intern Time Clock</h2>
 
 <form id="myForm">
   <label>Full Name</label>
@@ -113,6 +38,5 @@ function SubForm (){
 <div class="buttonDiv">
   <button class="button" onclick="SubForm(); clickFunction()">In</button>
 </div>
-
 </body>
 </html>
