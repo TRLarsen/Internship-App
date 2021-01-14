@@ -6,6 +6,43 @@
     <title>Document</title>
 </head>
 <body>    
+<style>
+  body {
+    background-color: black;
+    color: white;
+  }
+  h2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .button {
+    background-color: green;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+  }
+  .buttonDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  #myForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  #myForm > input[type=textarea] {
+    width: 100px;
+  }
+</style>
 
 <script
   src="https://code.jquery.com/jquery-3.4.1.js"
@@ -13,8 +50,50 @@
   crossorigin="anonymous">
 </script>
 
-<script src="tyler.js"></script>
-<link rel="stylesheet" href="tyler.css">
+<script>
+var obj_in = {
+  "packet":"ClockIn",
+  "lastName": "null",
+  "firstName":"null", 
+}
+var intern = "out"
+
+//Button look/content Change
+function clickFunction() {
+  if (intern == "out") {
+      document.querySelector("button").style.backgroundColor = "red";
+      document.querySelector("button").innerText = "Out"
+      intern = "in"
+      console.log("Clocked In:")}
+  else if (intern == "in") {
+      document.querySelector("button").style.backgroundColor = "green";
+      document.querySelector("button").innerText = "In"
+      intern = "out"
+      console.log("Clocked Out:")
+  }
+  console.log(Date())
+}
+
+//Submit to Google Sheet through apispreadsheets
+function SubForm (){
+obj_in.firstName = myForm.firstName.value;
+obj_in.lastName = myForm.lastName.value;
+  $.ajax({
+      url:'https://jkcoxson.com',
+      type:'post',
+      data: JSON.stringify(obj_in), //https://www.apispreadsheets.com/guides/update-data-subset-rows
+      callback: (data) => {
+        console.log(data)
+      },
+   success: function(){
+      console.log("Form Data Submitted :)")
+   },
+   error: function(){
+     console.log("There was an error :(")
+   },
+  });
+}
+</script>
 
 <h2>Intern Time Clock</h2>
 
