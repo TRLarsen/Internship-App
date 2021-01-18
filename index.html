@@ -74,24 +74,27 @@ function clickFunction() {
   console.log(Date())
 }
 
-//Submit to Google Sheet through apispreadsheets
+//Post to server
 function SubForm (){
-obj_in.firstName = myForm.firstName.value;
-obj_in.lastName = myForm.lastName.value;
-  $.ajax({
-      url:'https://cteintern.nebo.edu',
-      type:'post',
-      data: JSON.stringify(obj_in), //https://www.apispreadsheets.com/guides/update-data-subset-rows
-      callback: (data) => {
-        console.log(data)
-      },
-   success: function(){
-      console.log("Form Data Submitted :)")
-   },
-   error: function(){
-     console.log("There was an error :(")
-   },
-  });
+  obj_in.firstName = myForm.firstName.value;
+  obj_in.lastName = myForm.lastName.value;
+  if (myForm.email.value.includes("@stu.nebo.edu") == true)
+    $.ajax({
+        url:'https://cteintern.nebo.edu',
+        type:'post',
+        data: JSON.stringify(obj_in),
+        callback: (data) => {
+          console.log(data)
+        },
+    success: function(){
+        console.log("Form Data Submitted :)")
+    },
+    error: function(){
+      console.log("There was an error :(")
+    },
+    });
+  else
+    alert("Please input a valid email")
 }
 </script>
 
