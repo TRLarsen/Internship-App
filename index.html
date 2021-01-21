@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<body>    
+<body>
+<!-- CSS  -->
 <style>
   body {
     background-color: black;
@@ -33,17 +34,38 @@
     justify-content: center;
     align-items: center;
   }
-  #myForm {
+  #signOnForm {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
   }
-  #myForm > input[type=textarea] {
+  #signOnForm > input[type=textarea] {
     width: 100px;
+  }
+  .form {
+    text-align: center;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  #outForm {
+    display: none;
+  }
+  .testToggle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  #clockOutBtn {
+    display: none;
+  }
+  #clockInBtn {
+    display: none;
   }
 </style>
 
+<!-- Javascript -->
 <script
   src="https://code.jquery.com/jquery-3.4.1.js"
   integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
@@ -54,31 +76,94 @@
 var obj_in = {
   "packet":"ClockIn",
   "lastName": "null",
-  "firstName":"null", 
+  "firstName":"null",
+  "email":"null"
 }
+
+var obj_out = {
+  "packet":"ClockOut",
+  "lastName":"null",
+  "firstName":"null",
+  "email":"null",
+  "message":"null"
+}
+
+var obj_test = {
+  "packet":"testIn",
+  "lastName":"null",
+  "firstName":"null",
+}
+
 var intern = "out"
+var clockedIn = false
+
+// $.ajax({
+//   url:'https://cteintern.nebo.edu',
+//   type:'post',
+//   data: obj_test,
+//   return: obj_test,
+// }),
+
+var url = "https://cteintern.nebo.edu:443";
+    const request = new Request(url,{
+        method:"POST",
+        body: obj_test,
+        headers: new Headers({
+            'Content-Type': 'application/json'
+        })
+    });
+    
+    fetch(request)
+        .then(response => response.json())
+    .then(data => {clockedIn = data});
+
+function showOut() {
+  var x = document.getElementById("outForm")
+  var y = document.getElementById("clockOutBtn")
+  var z = document.getElementById("clockInBtn")
+  if (clockedIn == true) {
+    z.style.display = "none"
+    clockedIn = false
+    if (x.style.display === "none") {
+      x.style.display = "block";
+      y.style.display = "block";
+    } 
+    else {
+      x.style.display = "none";
+      y.style.display = "none";
+    }
+  }
+  else if (clockedIn == false) {
+    x.style.display = "none"
+    y.style.display = "none"
+    z.style.display = "block"
+    clockedIn=true
+  }
+}
 
 //Button look/content Change
-function clickFunction() {
-  if (intern == "out") {
-      document.querySelector("button").style.backgroundColor = "red";
-      document.querySelector("button").innerText = "Out"
-      intern = "in"
-      console.log("Clocked In:")}
-  else if (intern == "in") {
-      document.querySelector("button").style.backgroundColor = "green";
-      document.querySelector("button").innerText = "In"
-      intern = "out"
-      console.log("Clocked Out:")
-  }
-  console.log(Date())
-}
+// function clickFunction() {
+//   if (intern == "out") {
+//       document.getElementById("inOutButton").style.backgroundColor = "red";
+//       document.getElementById("inOutButton").innerText = "Out"
+//       intern = "in"
+//       console.log("Clocked In:")}
+//   else if (intern == "in") {
+//       document.getElementById("inOutButton").style.backgroundColor = "green";
+//       document.getElementById("inOutButton").innerText = "In"
+//       intern = "out"
+//       console.log("Clocked Out:")
+//   }
+//   console.log(Date())
+// }
 
 //Post to server
+
 function SubForm (){
-  obj_in.firstName = myForm.firstName.value;
-  obj_in.lastName = myForm.lastName.value;
-  if (myForm.email.value.includes("@stu.nebo.edu") == true)
+  if (signOnForm.email.value.includes("@stu.nebo.edu") == true && test == true) {
+    obj_in.firstName = signOnForm.firstName.value;
+    obj_in.lastName = signOnForm.lastName.value;
+    obj_in.email = signOnForm.email.value;
     $.ajax({
         url:'https://cteintern.nebo.edu',
         type:'post',
@@ -92,32 +177,67 @@ function SubForm (){
     error: function(){
       console.log("There was an error :(")
     },
-    });
-  else
+    })}
+  else if (signOnForm.email.value.includes("@stu.nebo.edu") == true && test == false){
+    obj_out.firstName = signOnForm.firstName.value;
+    obj_out.lastName = signOnForm.lastName.value;
+    obj_out.email = signOnForm.email.value;
+    obj_out.message = outForm.message.value;
+    $.ajax({
+          url:'https://cteintern.nebo.edu',
+          type:'post',
+          data: JSON.stringify(obj_out),
+          callback: (data) => {
+            console.log(data)
+          },
+      success: function(){
+          console.log("Form Data Submitted :)")
+      },
+      error: function(){
+        console.log("There was an error :(")
+      },
+      })}
+  else {
     alert("Please input a valid email")
+  }
 }
 </script>
 
+<!-- HTML -->
 <h2>Intern Time Clock</h2>
 
-<form id="myForm">
-  <label>Full Name</label>
+<form id="signOnForm">
+  <label>First Name</label>
   <br/>
   <input name="firstName" />
+  <br/>
+  <label>Last Name</label>
+  <br/>
+  <input name="lastName" />
   <br/>
   <label>Student Email</label>
   <br/>
   <input name="email" />
   <br/>
+</form>
+
+<div class="testToggle">
+  <button class="button" id="testButton" onclick="showOut()">Submit</button>
+</div>
+
+<form id="outForm" class="form">
   <label>What did you do today?</label>
   <br/>
-  <textarea name="lastName"></textarea>
-  <br/>
+  <textarea name="message"></textarea>
   <br/>
 </form>
 
 <div class="buttonDiv">
-  <button class="button" onclick="SubForm(); clickFunction()">In</button>
+  <button class="button" id="clockOutBtn" onclick="SubForm(); clickFunction()">Clock Out</button>
+</div>
+
+<div class="clockInBtnDiv">
+  <button id="clockInBtn" onclick="">Clock In</button>
 </div>
 
 <div class="warning">
