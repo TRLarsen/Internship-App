@@ -107,7 +107,7 @@ var clockedIn = false
 var url = "https://cteintern.nebo.edu:443";
     const request = new Request(url,{
         method:"POST",
-        body: obj_test,
+        body: JSON.stringify(obj_test),
         headers: new Headers({
             'Content-Type': 'application/json'
         })
