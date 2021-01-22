@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Nebo Interns Time Clock</title>
 </head>
 <body>
 <!-- CSS  -->
@@ -97,13 +97,6 @@ var obj_test = {
 var intern = "out"
 var clockedIn = false
 
-// $.ajax({
-//   url:'https://cteintern.nebo.edu',
-//   type:'post',
-//   data: obj_test,
-//   return: obj_test,
-// }),
-
 function request() {
   var url = "https://cteintern.nebo.edu:443";
     const request = new Request(url,{
@@ -119,7 +112,7 @@ function request() {
     .then(data => {clockedIn = data});
 }
 
-function showOut() {
+function showOut() { //https://www.w3schools.com/howto/howto_js_toggle_hide_show.asp
   var x = document.getElementById("outForm")
   var y = document.getElementById("clockOutBtn")
   var z = document.getElementById("clockInBtn")
@@ -224,7 +217,7 @@ function SubForm (){
 </form>
 
 <div class="testToggle">
-  <button class="button" id="testButton" onclick="showOut()">Submit</button>
+  <button class="button" id="testButton" onclick="showOut(); request()">Submit</button>
 </div>
 
 <form id="outForm" class="form">
@@ -235,15 +228,16 @@ function SubForm (){
 </form>
 
 <div class="buttonDiv">
-  <button class="button" id="clockOutBtn" onclick="SubForm(); clickFunction()">Clock Out</button>
+  <button class="button" id="clockOutBtn" onclick="SubForm()">Clock Out</button>
 </div>
 
-<div class="clockInBtnDiv">
-  <button id="clockInBtn" onclick="request()">Clock In</button>
+<div class="buttonDiv">
+  <button class="button" id="clockInBtn" onclick="SubForm()">Clock In</button>
 </div>
 
 <div class="warning">
   <h3>Please Note: The information on this form will be recorded for use in your Internship and to monitor your hours. If you believe anything that has been submitted is in error, please contact your Internship Advisor. If you discover a bug or are having trouble using or accessing the system, please email "nebocapsapps@gmail.com".</h3>
 </div>
+
 </body>
 </html>
