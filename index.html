@@ -109,7 +109,7 @@ function request() {
     
     fetch(request)
         .then(response => response.json())
-    .then(data => {clockedIn = data});
+    .then(data => {clockedIn = JSON.parse(data).status});
 }
 
 function showOut() { //https://www.w3schools.com/howto/howto_js_toggle_hide_show.asp
