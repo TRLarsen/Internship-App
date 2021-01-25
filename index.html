@@ -155,7 +155,7 @@ function showOut() { //https://www.w3schools.com/howto/howto_js_toggle_hide_show
 //Post to server
 
 function SubForm (){
-  if (signOnForm.email.value.includes("@stu.nebo.edu") == true && test == true) {
+  if (signOnForm.email.value.includes("@stu.nebo.edu") == true && clockedIn == true) {
     obj_in.firstName = signOnForm.firstName.value;
     obj_in.lastName = signOnForm.lastName.value;
     obj_in.email = signOnForm.email.value;
@@ -173,7 +173,7 @@ function SubForm (){
       console.log("There was an error :(")
     },
     })}
-  else if (signOnForm.email.value.includes("@stu.nebo.edu") == true && test == false){
+  else if (signOnForm.email.value.includes("@stu.nebo.edu") == true && clockedIn == false){
     obj_out.firstName = signOnForm.firstName.value;
     obj_out.lastName = signOnForm.lastName.value;
     obj_out.email = signOnForm.email.value;
