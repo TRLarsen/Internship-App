@@ -109,7 +109,7 @@ function request() {
     
     fetch(request)
         .then(response => response.json())
-    .then(data => {clockedIn = JSON.parse(data).status});
+    .then(data => {clockedIn = data.status});
 }
 
 function showOut() { //https://www.w3schools.com/howto/howto_js_toggle_hide_show.asp
@@ -136,27 +136,10 @@ function showOut() { //https://www.w3schools.com/howto/howto_js_toggle_hide_show
   }
 }
 
-//Button look/content Change
-// function clickFunction() {
-//   if (intern == "out") {
-//       document.getElementById("inOutButton").style.backgroundColor = "red";
-//       document.getElementById("inOutButton").innerText = "Out"
-//       intern = "in"
-//       console.log("Clocked In:")}
-//   else if (intern == "in") {
-//       document.getElementById("inOutButton").style.backgroundColor = "green";
-//       document.getElementById("inOutButton").innerText = "In"
-//       intern = "out"
-//       console.log("Clocked Out:")
-//   }
-//   console.log(Date())
-// }
-
 //Post to server
-
 function SubForm (){
   if (signOnForm.email.value.includes("@stu.nebo.edu") == true){
-    if (clockedIn == true) {
+    if (clockedIn == false) {
       obj_in.firstName = signOnForm.firstName.value;
       obj_in.lastName = signOnForm.lastName.value;
       obj_in.email = signOnForm.email.value;
@@ -168,13 +151,13 @@ function SubForm (){
             console.log(data)
           },
       success: function(){
-          console.log("Form Data Submitted :)")
+          alert("Form Data Submitted :)")
       },
       error: function(){
-        console.log("There was an error :(")
+        alert("Data Submission Failed :(")
       },
       })}
-    else if (clockedIn == false){
+    else if (clockedIn == true){
       obj_out.firstName = signOnForm.firstName.value;
       obj_out.lastName = signOnForm.lastName.value;
       obj_out.email = signOnForm.email.value;
@@ -187,10 +170,10 @@ function SubForm (){
               console.log(data)
             },
         success: function(){
-            console.log("Form Data Submitted :)")
+            alert("Form Data Submitted :)")
         },
         error: function(){
-          console.log("There was an error :(")
+          alert("Data Submission Failed :(")
         },
         })}
     else {
