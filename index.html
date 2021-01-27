@@ -97,7 +97,10 @@ var obj_test = {
 var intern = "out"
 var clockedIn = false
 
+
 function request() {
+  obj_test.firstName = signOnForm.firstName.value;
+  obj_test.lastName = signOnForm.lastName.value;
   var url = "https://cteintern.nebo.edu:443";
     const request = new Request(url,{
         method:"POST",
@@ -150,6 +153,7 @@ function SubForm (){
           },
       success: function(){
           alert("Form Data Submitted :)")
+          z.style.display = "none"
       },
       error: function(){
         alert("Data Submission Failed :(")
@@ -169,6 +173,8 @@ function SubForm (){
             },
         success: function(){
             alert("Form Data Submitted :)")
+            x.style.display = "none";
+            y.style.display = "none";
         },
         error: function(){
           alert("Data Submission Failed :(")
