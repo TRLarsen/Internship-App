@@ -112,7 +112,10 @@ function request() {
     
     fetch(request)
         .then(response => response.json())
-    .then(data => {clockedIn = data.status});
+    .then(data => {
+      clockedIn = data.status;
+      showOut();
+    });
 }
 //https://www.w3schools.com/howto/howto_js_toggle_hide_show.asp
 function showOut() { 
@@ -212,7 +215,7 @@ function SubForm (){
 </form>
 
 <div class="testToggle">
-  <button class="button" id="testButton" onclick="showOut(); request()">Submit</button>
+  <button class="button" id="testButton" onclick="request()">Submit</button>
 </div>
 
 <form id="outForm" class="form">
