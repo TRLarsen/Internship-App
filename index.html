@@ -139,6 +139,9 @@ function showOut() {
 
 //Post to server
 function SubForm (){
+  var x = document.getElementById("outForm")
+  var y = document.getElementById("clockOutBtn")
+  var z = document.getElementById("clockInBtn")
   if (signOnForm.email.value.includes("@stu.nebo.edu") == true){
     if (clockedIn == false) {
       obj_in.firstName = signOnForm.firstName.value;
