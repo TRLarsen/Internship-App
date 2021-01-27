@@ -111,18 +111,17 @@ function request() {
         .then(response => response.json())
     .then(data => {clockedIn = data.status});
 }
-
-function showOut() { //https://www.w3schools.com/howto/howto_js_toggle_hide_show.asp
+//https://www.w3schools.com/howto/howto_js_toggle_hide_show.asp
+function showOut() { 
   var x = document.getElementById("outForm")
   var y = document.getElementById("clockOutBtn")
   var z = document.getElementById("clockInBtn")
   if (clockedIn == true) {
     z.style.display = "none"
-    clockedIn = false
     if (x.style.display === "none") {
       x.style.display = "block";
       y.style.display = "block";
-    } 
+    }
     else {
       x.style.display = "none";
       y.style.display = "none";
@@ -132,7 +131,6 @@ function showOut() { //https://www.w3schools.com/howto/howto_js_toggle_hide_show
     x.style.display = "none"
     y.style.display = "none"
     z.style.display = "block"
-    clockedIn=true
   }
 }
 
