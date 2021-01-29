@@ -160,6 +160,24 @@ function SubForm (){
       success: function(){
           alert("Form Data Submitted :)")
           z.style.display = "none"
+            obj_test.firstName = obj_in.firstName;
+            obj_test.lastName = obj_in.lastName;
+            var url = "https://cteintern.nebo.edu:443";
+              const request = new Request(url,{
+                  method:"POST",
+                  body: JSON.stringify(obj_test),
+                  headers: new Headers({
+                      'Content-Type': 'application/json'
+                  })
+              });  
+              fetch(request)
+                  .then(response => response.json())
+              .then(data => {
+                var test = data.status;
+              });
+            if (test == false) {
+              alert("You've already clocked in today, please wait to clock in again until tomorrow. This data will not be recorded.");
+            }
       },
       error: function(){
         alert("Data Submission Failed :(")
