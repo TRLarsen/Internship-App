@@ -173,7 +173,7 @@ function SubForm (){
               fetch(request)
                   .then(response => response.json())
               .then(data => {
-                var test = data.status;
+                test = data.status;
               });
             if (test == false) {
               alert("You've already clocked in today, please wait to clock in again until tomorrow. This data will not be recorded.");
