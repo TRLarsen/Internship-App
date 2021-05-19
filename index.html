@@ -99,12 +99,30 @@ var clockedIn = false
 
 
 function request() {
-  obj_test.firstName = signOnForm.firstName.value;
-  obj_test.lastName = signOnForm.lastName.value;
-  var url = "https://cteintern.nebo.edu:443";
+  if (signOnForm.email.value.includes("@stu.nebo.edu") == true){
+    obj_test.firstName = signOnForm.firstName.value;
+    obj_test.lastName = signOnForm.lastName.value;
+    var url = "https://cteintern.nebo.edu:443";
+      const request = new Request(url,{
+          method:"POST",
+          body: JSON.stringify(obj_test),
+          headers: new Headers({
+              'Content-Type': 'application/json'
+          })
+      });
+      
+      fetch(request)
+          .then(response => response.json())
+      .then(data => {
+        clockedIn = data.status;
+        showOut();
+      });
+  }
+  else if (signOnForm.email.value.includes("@nebo.edu") == true){
+    var url = "https://cteintern.nebo.edu:443";
     const request = new Request(url,{
         method:"POST",
-        body: JSON.stringify(obj_test),
+        body: JSON.parse({"packet":"admin"}),
         headers: new Headers({
             'Content-Type': 'application/json'
         })
@@ -113,9 +131,14 @@ function request() {
     fetch(request)
         .then(response => response.json())
     .then(data => {
-      clockedIn = data.status;
-      showOut();
+      var csv = data;
+      var hiddenElement = document.createElement('a');
+      hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+      hiddenElement.target = '_blank';
+      hiddenElement.download = 'report.csv';
+      hiddenElement.click();
     });
+  }
 }
 //https://www.w3schools.com/howto/howto_js_toggle_hide_show.asp
 function showOut() { 
@@ -207,27 +230,6 @@ function SubForm (){
     else {
       alert("There was an error :(")
     }
-  }
-  else if (signOnForm.email.value.includes("@nebo.edu") == true){
-    var url = "https://cteintern.nebo.edu:443";
-    const request = new Request(url,{
-        method:"POST",
-        body: "admin",
-        headers: new Headers({
-            'Content-Type': 'application/json'
-        })
-    });
-    
-    fetch(request)
-        .then(response => response.json())
-    .then(data => {
-      var csv = data;
-      var hiddenElement = document.createElement('a');
-      hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
-      hiddenElement.target = '_blank';
-      hiddenElement.download = 'report.csv';
-      hiddenElement.click();
-    });
   }
   else {
     alert("Please input a valid email")
