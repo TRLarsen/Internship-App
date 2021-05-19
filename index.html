@@ -122,7 +122,7 @@ function request() {
     var url = "https://cteintern.nebo.edu:443";
     const request = new Request(url,{
         method:"POST",
-        body: JSON.parse({"packet":"admin"}),
+        body: JSON.stringify({"packet":"admin"}),
         headers: new Headers({
             'Content-Type': 'application/json'
         })
@@ -138,6 +138,9 @@ function request() {
       hiddenElement.download = 'report.csv';
       hiddenElement.click();
     });
+  }
+  else {
+    alert("Please Input a Valid Email")
   }
 }
 //https://www.w3schools.com/howto/howto_js_toggle_hide_show.asp
